@@ -1,11 +1,10 @@
-export class ErrorModel {
+export class Error {
   statusCode: number;
   message: string;
   additions: any;
+  isSuccessfully = false;
 
-  constructor(code: number, message: string, additions?: any) {
-    this.statusCode = code;
-    this.message = message;
-    this.additions = additions;
+  constructor(statusCode: number, message: string, additions?: any) {
+    Object.assign(this, { statusCode, message, additions });
   }
 }
