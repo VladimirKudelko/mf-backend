@@ -2,9 +2,10 @@ import * as httpStatus from 'http-status-codes';
 import * as _ from 'lodash';
 
 import { ErrorController } from '../types/error-controller';
+import { MongoError } from 'mongodb';
 
 const errorHandler: ErrorController = (error, req, res, next) => {
-  console.log(error.stack || error.message || error);
+  console.error(error.stack || error.message || error);
 
   const { statusCode, message } = error;
 
@@ -13,6 +14,11 @@ const errorHandler: ErrorController = (error, req, res, next) => {
   } else if (error.errors) {
     res.status(httpStatus.BAD_REQUEST).json({
       message: _.values(error.errors)[0].message,
+      isSuccessfully: false
+    });
+  } else if (error instanceof MongoError) {
+    res.status(httpStatus.BAD_REQUEST).json({
+      message: error.errmsg,
       isSuccessfully: false
     });
   } else {

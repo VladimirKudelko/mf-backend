@@ -3,7 +3,6 @@ import * as passport from 'passport';
 
 import { authHelper } from '../db/helpers';
 import { Controller } from '../types';
-import { generateJWT } from '../utils';
 import { Response } from '../models';
 
 export const registerUser: Controller = async(req, res, next) => {
@@ -13,7 +12,10 @@ export const registerUser: Controller = async(req, res, next) => {
 
     createdUser.password = undefined;
 
-    res.json(new Response(createdUser.toJSON()));
+    res.json(new Response({
+      token: createdUser.generateJWT(),
+      ...createdUser.toJSON(),
+    }));
   } catch (error) {
     next(error);
   }
@@ -29,8 +31,8 @@ export const loginUser: Controller = async(req, res, next) => {
       user.password = undefined;
 
       return res.json(new Response({
+        token: user.generateJWT(),
         ...user.toJSON(),
-        token: generateJWT(user)
       }));
     } catch (error) {
       next(error);

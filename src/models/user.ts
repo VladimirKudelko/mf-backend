@@ -8,4 +8,5 @@ export interface IUser extends mongoose.Document {
   isAdmin?: boolean;
   encryptPassword(password: string): void;
   validatePassword(password: string): boolean;
+  generateJWT(): string;
 }
