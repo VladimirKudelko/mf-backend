@@ -4,6 +4,7 @@ import * as jwt from 'jsonwebtoken';
 
 import mongoose from '../../context';
 import { IUser } from '../../models';
+import { RoleEnum } from '../../enums';
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -23,9 +24,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  isAdmin: {
+  role: {
     type: String,
-    default: false
+    default: RoleEnum.User,
+    enum: [ RoleEnum.User, RoleEnum.Admin ]
   }
 }, { versionKey: false });
 

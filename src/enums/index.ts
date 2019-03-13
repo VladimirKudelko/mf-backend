@@ -1,5 +1,7 @@
-import { ErrorMessages } from './error-messages';
+import { ErrorMessageEnum } from './error-message';
+import { RoleEnum } from './role';
 
 export {
-  ErrorMessages
+  ErrorMessageEnum,
+  RoleEnum
 };
