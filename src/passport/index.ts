@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 import * as httpStatus from 'http-status-codes';
 
 import { authHelper } from '../db/helpers';
-import { Error } from '../models';
+import { ErrorModel } from '../models';
 import { ErrorMessages } from '../enums';
 import { User } from '../db/schemas';
 
@@ -20,13 +20,13 @@ passport.use(new LocalStrategy.Strategy({
   const user = await authHelper.findByEmail(email);
 
   if (_.isEmpty(user)) {
-    return done(new Error(httpStatus.BAD_REQUEST, ErrorMessages.IncorrectEmail), null);
+    return done(new ErrorModel(httpStatus.BAD_REQUEST, ErrorMessages.IncorrectEmail), null);
   }
 
   const isMatchedPasswords = await user.validatePassword(password);
 
   if (!isMatchedPasswords) {
-    return done(new Error(httpStatus.BAD_REQUEST, ErrorMessages.IncorrectPassword), null);
+    return done(new ErrorModel(httpStatus.BAD_REQUEST, ErrorMessages.IncorrectPassword), null);
   }
 
   return done(null, user);

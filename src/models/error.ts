@@ -1,4 +1,4 @@
-export class Error {
+export class ErrorModel {
   statusCode: number;
   message: string;
   additions: any;

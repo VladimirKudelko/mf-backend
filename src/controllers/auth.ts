@@ -1,5 +1,6 @@
 
 import * as passport from 'passport';
+import * as _ from 'lodash';
 
 import { authHelper } from '../db/helpers';
 import { Controller } from '../types';
@@ -24,7 +25,7 @@ export const registerUser: Controller = async(req, res, next) => {
 export const loginUser: Controller = async(req, res, next) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {
     try {
-      if (err || !user) {
+      if (!_.isEmpty(err) || _.isEmpty(user)) {
         throw err;
       }
 

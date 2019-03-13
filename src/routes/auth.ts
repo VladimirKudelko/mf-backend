@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as _ from 'lodash';
 
 import { registerUser, loginUser } from '../controllers/auth';
 
