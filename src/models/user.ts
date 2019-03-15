@@ -1,7 +1,7 @@
 import mongoose from '../context';
 import { RoleEnum } from '../enums';
 
-export interface IUser extends mongoose.Document {
+export interface UserDocument extends mongoose.Document {
   firstName: string;
   lastName: string;
   email: string;

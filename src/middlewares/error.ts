@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 
 import { ErrorController } from '../types/error-controller';
 import { MongoError } from 'mongodb';
+import { ErrorModel } from '../models';
 
 const errorHandler: ErrorController = (error, req, res, next) => {
   console.error(error.stack || error.message || error);
@@ -10,22 +11,18 @@ const errorHandler: ErrorController = (error, req, res, next) => {
   const { statusCode, message } = error;
 
   if (statusCode && message) {
-    res.status(statusCode).json(error);
+    res.json(new ErrorModel(statusCode, message));
   } else if (error.errors) {
-    res.status(httpStatus.BAD_REQUEST).json({
-      message: _.values(error.errors)[0].message,
-      isSuccessfully: false
-    });
+    res.json(new ErrorModel(httpStatus.BAD_REQUEST, _.values(error.errors)[0].message));
   } else if (error instanceof MongoError) {
-    res.status(httpStatus.BAD_REQUEST).json({
-      message: error.errmsg,
-      isSuccessfully: false
-    });
+    res.json(new ErrorModel(httpStatus.BAD_REQUEST, error.errmsg));
+  } else if (error.isBoom) {
+    res.json(new ErrorModel(httpStatus.BAD_REQUEST, error.message));
   } else {
-    res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
-      message: httpStatus.getStatusText(httpStatus.INTERNAL_SERVER_ERROR),
-      isSuccessfully: false
-    });
+    res.json(new ErrorModel(
+      httpStatus.INTERNAL_SERVER_ERROR,
+      httpStatus.getStatusText(httpStatus.INTERNAL_SERVER_ERROR)
+    ));
   }
 };
 

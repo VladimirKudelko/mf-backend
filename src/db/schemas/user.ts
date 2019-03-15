@@ -3,7 +3,7 @@ import * as config from 'config';
 import * as jwt from 'jsonwebtoken';
 
 import mongoose from '../../context';
-import { IUser } from '../../models';
+import { UserDocument } from '../../models';
 import { RoleEnum } from '../../enums';
 
 const userSchema = new mongoose.Schema({
@@ -43,4 +43,4 @@ userSchema.methods.generateJWT = function() {
   return `bearer ${ jwt.sign(this.toObject(), config.get('secretKey'), { expiresIn: 86400000 }) }`;
 };
 
-export default mongoose.model<IUser>('user', userSchema);
+export default mongoose.model<UserDocument>('user', userSchema);

@@ -1,9 +1,9 @@
 import { ErrorModel } from './error';
 import { Response } from './response';
-import { IUser } from './user';
+import { UserDocument } from './user';
 
 export {
   ErrorModel,
-  IUser,
+  UserDocument,
   Response,
 };
