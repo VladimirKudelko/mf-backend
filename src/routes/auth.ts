@@ -1,5 +1,4 @@
 import * as express from 'express';
-import * as _ from 'lodash';
 import * as expressJoi from 'express-joi-validator';
 
 import { registerUser, loginUser } from '../controllers/auth';

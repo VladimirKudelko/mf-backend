@@ -2,7 +2,7 @@
 import * as passport from 'passport';
 import * as _ from 'lodash';
 
-import { authHelper } from '../db/helpers';
+import { authHelper, walletHelper } from '../db/helpers';
 import { Controller } from '../types';
 import { Response } from '../models';
 
@@ -10,6 +10,7 @@ export const registerUser: Controller = async(req, res, next) => {
   try {
     const { body } = req;
     const createdUser = await authHelper.create(body);
+    const wallet = await walletHelper.create({ userId: createdUser._id });
 
     createdUser.password = undefined;
 

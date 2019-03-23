@@ -1,6 +1,7 @@
 import { User } from '../schemas';
+import { UserDocument } from '../../models';
 
-const create = async(data) => {
+const create = async(data: UserDocument) => {
   const user = await new User(data);
 
   await user.encryptPassword(data.password);
