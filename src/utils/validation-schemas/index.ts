@@ -1,11 +1,12 @@
-import { creationUserSchema } from './creation-user';
-import { authenticationUserSchema } from './authentication-user';
-import { retrievingUserCashSchema } from './user-cash';
-import { creationCategorySchema } from './creation-category';
+import { authenticationUserSchema, creationUserSchema } from './user';
+import { retrievingViaUseIdSchema } from './common';
+import { creationCategorySchema } from './category';
+import { creationTransactionSchema } from './transaction';
 
 export {
   authenticationUserSchema,
   creationUserSchema,
   creationCategorySchema,
-  retrievingUserCashSchema
+  creationTransactionSchema,
+  retrievingViaUseIdSchema
 };

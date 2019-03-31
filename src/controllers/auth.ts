@@ -10,8 +10,8 @@ export const registerUser: Controller = async(req, res, next) => {
   try {
     const { body } = req;
     const createdUser = await authHelper.create(body);
-    const wallet = await walletHelper.create({ userId: createdUser._id });
 
+    await walletHelper.create({ userId: createdUser._id });
     createdUser.password = undefined;
 
     res.json(new Response({

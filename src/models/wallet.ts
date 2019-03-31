@@ -6,6 +6,7 @@ export interface WalletDocument extends mongoose.Document {
   type: string;
   balance: number;
   currency: string;
+  createdDate: Date;
   cardNumber?: string;
   cardService?: string;
   bank?: string;

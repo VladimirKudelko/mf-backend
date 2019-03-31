@@ -1,12 +1,15 @@
 import { Controller } from '../types';
 import { categoryHelper } from '../db/helpers';
+import { Response } from '../models';
 
 export const createCategory: Controller = async(req, res, next) => {
   try {
     const { userId } = req.params;
     const category = await categoryHelper.create({ ...req.body, userId });
 
-    res.json(category);
+    res.json(new Response({
+      category
+    }));
   } catch (error) {
     next(error);
   }
@@ -18,7 +21,9 @@ export const getExpensesCategories: Controller = async(req, res, next) => {
     const expensesCategories = await categoryHelper.getExpenses(userId);
     const defaultCategories = await categoryHelper.getDefaultExpenses();
 
-    res.json({ categories: [ ...expensesCategories, ...defaultCategories ] });
+    res.json(new Response({
+      categories: [ ...expensesCategories, ...defaultCategories ]
+    }));
   } catch (error) {
     next(error);
   }
@@ -30,7 +35,9 @@ export const getIncomesCategories: Controller = async(req, res, next) => {
     const incomesCategories = await categoryHelper.getIncomes(userId);
     const defaultCategories = await categoryHelper.getDefaultIncomes();
 
-    res.json({ categories: [ ...incomesCategories, ...defaultCategories ] });
+    res.json(new Response({
+      categories: [ ...incomesCategories, ...defaultCategories ]
+    }));
   } catch (error) {
     next(error);
   }
