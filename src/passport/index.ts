@@ -17,7 +17,7 @@ passport.use(new LocalStrategy.Strategy({
   usernameField: 'email',
   passwordField: 'password'
 }, async(email, password, done) => {
-  const user = await authHelper.findByEmail(email);
+  const user = await authHelper.getByEmail(email);
 
   if (_.isEmpty(user)) {
     return done(new ErrorModel(httpStatus.BAD_REQUEST, ErrorMessageEnum.IncorrectEmail), null);

@@ -1,6 +1,6 @@
 import * as Joi from 'joi';
 
-export const retrievingUserCashSchema = {
+export const retrievingViaUseIdSchema = {
   params: {
     userId: Joi.string().required()
   }

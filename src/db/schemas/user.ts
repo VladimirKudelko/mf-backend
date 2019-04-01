@@ -24,10 +24,23 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  createdDate: {
+    type: mongoose.Schema.Types.Date,
+    default: Date.now()
+  },
   role: {
     type: String,
     default: RoleEnum.User,
     enum: [ RoleEnum.User, RoleEnum.Admin ]
+  },
+  tasks: {
+    type: Array,
+    default: [
+      { description: 'Sign Up', content: 'Some content', isCompleted: false },
+      { description: 'Create your first category', content: 'Some content', isCompleted: false },
+      { description: 'Track money', content: 'Some content', isCompleted: false },
+      { description: 'Change settings', content: 'Some content', isCompleted: false }
+    ]
   }
 }, { versionKey: false });
 

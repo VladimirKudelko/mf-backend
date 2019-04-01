@@ -2,15 +2,16 @@ import * as express from 'express';
 import * as expressJoi from 'express-joi-validator';
 
 import { createCategory, getExpensesCategories, getIncomesCategories } from '../controllers/category';
-import { creationCategorySchema } from '../utils/validation-schemas';
+import { authenticate } from '../middlewares/authentication';
+import { creationCategorySchema, retrievingViaUseIdSchema } from '../utils/validation-schemas';
 import { Category } from '../db/schemas';
 
 const router = express.Router();
 
-router.get('/expenses/:userId', getExpensesCategories);
-router.get('/incomes/:userId', getIncomesCategories);
-router.post('/:userId', expressJoi(creationCategorySchema), createCategory);
-router.post('/', async(req, res, next) => {
+router.get('/expenses/:userId', authenticate, expressJoi(retrievingViaUseIdSchema), getExpensesCategories);
+router.get('/incomes/:userId', authenticate, expressJoi(retrievingViaUseIdSchema), getIncomesCategories);
+router.post('/:userId', authenticate, expressJoi(creationCategorySchema), createCategory);
+router.post('/', authenticate, async(req, res, next) => {
   const categories = [
     { isDefault: true, title: 'Presents', type: 'Expenses' },
     { isDefault: true, title: 'Salary', type: 'Expenses' },
