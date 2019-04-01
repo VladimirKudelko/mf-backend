@@ -9,9 +9,16 @@ const create = async(data: UserDocument) => {
   return user.save();
 };
 
-const findByEmail = (email: string) => User.findOne({ email });
+const getById = (userId: string) => User.findById(userId);
+
+const getByEmail = (email: string) => User.findOne({ email });
+
+const updateById = (userId: string, data: UserDocument | any) =>
+  User.findOneAndUpdate({ _id: userId }, data, { new: true });
 
 export default {
   create,
-  findByEmail
+  getByEmail,
+  getById,
+  updateById
 };

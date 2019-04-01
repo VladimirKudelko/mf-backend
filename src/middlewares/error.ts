@@ -11,15 +11,24 @@ const errorHandler: ErrorController = (error, req, res, next) => {
   const { statusCode, message } = error;
 
   if (statusCode && message) {
-    res.json(new ErrorModel(statusCode, message));
+    res.status(statusCode).json(new ErrorModel(statusCode, message));
   } else if (error.errors) {
-    res.json(new ErrorModel(httpStatus.BAD_REQUEST, _.values(error.errors)[0].message));
+    res.status(httpStatus.BAD_REQUEST).json(new ErrorModel(
+      httpStatus.BAD_REQUEST,
+      _.values(error.errors)[0].message
+    ));
   } else if (error instanceof MongoError) {
-    res.json(new ErrorModel(httpStatus.BAD_REQUEST, error.errmsg));
+    res.status(httpStatus.BAD_REQUEST).json(new ErrorModel(
+      httpStatus.BAD_REQUEST,
+      error.errmsg
+    ));
   } else if (error.isBoom) {
-    res.json(new ErrorModel(httpStatus.BAD_REQUEST, error.message));
+    res.status(httpStatus.BAD_REQUEST).json(new ErrorModel(
+      httpStatus.BAD_REQUEST,
+      error.message
+    ));
   } else {
-    res.json(new ErrorModel(
+    res.status(httpStatus.INTERNAL_SERVER_ERROR).json(new ErrorModel(
       httpStatus.INTERNAL_SERVER_ERROR,
       httpStatus.getStatusText(httpStatus.INTERNAL_SERVER_ERROR)
     ));

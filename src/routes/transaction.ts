@@ -7,7 +7,7 @@ import { authenticate } from '../middlewares/authentication';
 
 const router = express.Router();
 
-router.get('/user/:userId', expressJoi(retrievingViaUseIdSchema), getUserTransactions);
+router.get('/user/:userId', authenticate, expressJoi(retrievingViaUseIdSchema), getUserTransactions);
 router.post('/:userId', authenticate, expressJoi(creationTransactionSchema), createTransaction);
 
 export default router;

@@ -1,6 +1,6 @@
 import mongoose from '../../context';
 import { WalletDocument } from '../../models';
-import { WalletTypeEnum, CurrencyEnum, CardServiceEnum, BankEnum } from '../../enums';
+import { WalletTypeEnum, CurrencyEnum } from '../../enums';
 
 const walletSchema = new mongoose.Schema({
   userId: mongoose.Schema.Types.ObjectId,
@@ -21,17 +21,6 @@ const walletSchema = new mongoose.Schema({
     type: String,
     enum: [ CurrencyEnum.AmericanDollar, CurrencyEnum.Euro, CurrencyEnum.BelarusianRuble, CurrencyEnum.RussianRuble ],
     default: CurrencyEnum.AmericanDollar
-  },
-  cardNumber: {
-    type: String
-  },
-  cardService: {
-    type: String,
-    enum: [ CardServiceEnum.Maestro, CardServiceEnum.Visa ]
-  },
-  bank: {
-    type: String,
-    enum: [ BankEnum.Belarus, BankEnum.Mtb ]
   },
   createdDate: {
     type: mongoose.Schema.Types.Date,

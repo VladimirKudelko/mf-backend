@@ -19,3 +19,23 @@ export const creationUserSchema = {
   }
 };
 
+export const changeUserSettingsSchema = {
+  params: {
+    userId: Joi.string().required()
+  },
+  body: {
+    firstName: Joi.string(),
+    lastName: Joi.string(),
+    email: Joi.string().email()
+  }
+};
+
+export const changePasswordSchema = {
+  params: {
+    userId: Joi.string().required()
+  },
+  body: {
+    lastPassword: Joi.string(),
+    newPassword: Joi.string()
+  }
+};
