@@ -1,5 +1,5 @@
 import { Controller } from '../types';
-import { transactionHelper, walletHelper } from '../db/helpers';
+import { transactionHelper, walletHelper, authHelper } from '../db/helpers';
 import { CategoryTypeEnum } from '../enums';
 import { Response } from '../models';
 
@@ -13,6 +13,10 @@ export const createTransaction: Controller = async(req, res, next) => {
       : wallet.balance - body.amountMoney;
 
     await walletHelper.update(body.walletId, { balance, lastUpdate: Date.now() });
+
+    if (body.isUpdateTask) {
+      await authHelper.updateById(req.user._id, { $set: { 'tasks.2.isCompleted': body.isUpdateTask } });
+    }
 
     res.json(new Response({ transaction }));
   } catch (error) {
