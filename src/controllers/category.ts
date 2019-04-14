@@ -1,11 +1,15 @@
 import { Controller } from '../types';
-import { categoryHelper } from '../db/helpers';
+import { categoryHelper, authHelper } from '../db/helpers';
 import { Response } from '../models';
 
 export const createCategory: Controller = async(req, res, next) => {
   try {
-    const { userId } = req.params;
-    const category = await categoryHelper.create({ ...req.body, userId });
+    const { params: { userId }, body } = req;
+    const category = await categoryHelper.create({ ...body, userId });
+
+    if (body.isUpdateTask) {
+      await authHelper.updateById(req.user._id, { $set: { 'tasks.1.isCompleted': body.isUpdateTask } });
+    }
 
     res.json(new Response({
       category

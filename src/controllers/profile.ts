@@ -22,7 +22,10 @@ export const getUserProfile: Controller = async(req, res, next) => {
 export const updateSettings: Controller = async(req, res, next) => {
   try {
     const { params: { userId }, body } = req;
-    const updatedUser = await authHelper.updateById(userId, body);
+    const condition = body.isUpdateTask
+      ? { ...body, $set: { 'tasks.3.isCompleted': body.isUpdateTask } }
+      : body;
+    const updatedUser = await authHelper.updateById(userId, condition);
 
     if (!_.isEmpty(updatedUser)) {
       updatedUser.password = undefined;
@@ -39,17 +42,17 @@ export const updateSettings: Controller = async(req, res, next) => {
 
 export const changePassword: Controller = async(req, res, next) => {
   try {
-    const { params: { userId }, body: { lastPassword, newPassword }, user } = req;
+    const { params: { userId }, body: { lastPassword, newPassword, isUpdateTask }, user } = req;
     const isMatchedPasswords = await bcrypt.compare(lastPassword, user.password);
 
     if (!isMatchedPasswords) {
       throw new ErrorModel(httpStatus.BAD_REQUEST, ErrorMessageEnum.IncorrectPassword);
     }
 
-    const updatedUser = await authHelper.updateById(
-      user._id,
-      { password: await encrypt(newPassword) }
-    );
+    const condition = isUpdateTask
+      ? { password: await encrypt(newPassword), $set: { 'tasks.3.isCompleted': isUpdateTask } }
+      : { password: await encrypt(newPassword) };
+    const updatedUser = await authHelper.updateById(user._id, condition);
 
     res.json(new Response({ updatedUser }));
   } catch (error) {

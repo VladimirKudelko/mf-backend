@@ -26,7 +26,8 @@ export const changeUserSettingsSchema = {
   body: {
     firstName: Joi.string(),
     lastName: Joi.string(),
-    email: Joi.string().email()
+    email: Joi.string().email(),
+    isUpdateTask: Joi.boolean()
   }
 };
 
@@ -36,6 +37,7 @@ export const changePasswordSchema = {
   },
   body: {
     lastPassword: Joi.string(),
-    newPassword: Joi.string()
+    newPassword: Joi.string(),
+    isUpdateTask: Joi.boolean()
   }
 };

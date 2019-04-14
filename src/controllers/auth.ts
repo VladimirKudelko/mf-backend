@@ -16,7 +16,7 @@ export const registerUser: Controller = async(req, res, next) => {
 
     res.json(new Response({
       token: createdUser.generateJWT(),
-      ...createdUser.toJSON(),
+      user: createdUser.toJSON(),
     }));
   } catch (error) {
     next(error);
@@ -34,7 +34,7 @@ export const loginUser: Controller = async(req, res, next) => {
 
       return res.json(new Response({
         token: user.generateJWT(),
-        ...user.toJSON(),
+        user: user.toJSON(),
       }));
     } catch (error) {
       next(error);

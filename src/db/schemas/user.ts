@@ -36,10 +36,10 @@ const userSchema = new mongoose.Schema({
   tasks: {
     type: Array,
     default: [
-      { description: 'Sign Up', content: 'Some content', isCompleted: false },
-      { description: 'Create your first category', content: 'Some content', isCompleted: false },
-      { description: 'Track money', content: 'Some content', isCompleted: false },
-      { description: 'Change settings', content: 'Some content', isCompleted: false }
+      { key: 'signup', description: 'Sign Up', content: 'Some content', isCompleted: true },
+      { key: 'category', description: 'Create your first category', content: 'Some content', isCompleted: false },
+      { key: 'money', description: 'Track money', content: 'Some content', isCompleted: false },
+      { key: 'settings', description: 'Change settings', content: 'Some content', isCompleted: false }
     ]
   }
 }, { versionKey: false });
