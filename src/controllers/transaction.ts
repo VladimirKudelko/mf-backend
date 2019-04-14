@@ -30,9 +30,7 @@ export const getUserTransactions: Controller = async(req, res, next) => {
     const { period } = req.query;
     const transactions = await transactionHelper.getByInterval(userId, period);
 
-    res.json(new Response({
-      transactions
-    }));
+    res.json(new Response({ transactions }));
   } catch (error) {
     next(error);
   }
