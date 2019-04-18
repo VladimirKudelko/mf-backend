@@ -12,6 +12,10 @@ const categorySchema = new mongoose.Schema({
     type: String,
     enum: [ CategoryTypeEnum.Expenses, CategoryTypeEnum.Incomes ]
   },
+  icon: {
+    type: String,
+    default: ''
+  },
   isDefault: {
     type: Boolean,
     default: false,

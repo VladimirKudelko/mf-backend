@@ -9,6 +9,7 @@ export const creationCategorySchema = {
   body: {
     title: Joi.string().required(),
     type: Joi.string().valid(CategoryTypeEnum.Expenses, CategoryTypeEnum.Incomes).required(),
+    icon: Joi.string(),
     isDefault: Joi.boolean(),
     isUpdateTask: Joi.boolean()
   }
