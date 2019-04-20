@@ -12,13 +12,16 @@ export const createTransaction: Controller = async(req, res, next) => {
       ? wallet.balance + body.amountMoney
       : wallet.balance - body.amountMoney;
 
-    await walletHelper.update(body.walletId, { balance, lastUpdate: Date.now() });
+    const updatedWallet = await walletHelper.update(
+      body.walletId,
+      { balance, lastUpdate: Date.now() }
+    ).select({ balance: 1, _id: 0 });
 
     if (body.isUpdateTask) {
       await authHelper.updateById(req.user._id, { $set: { 'tasks.2.isCompleted': body.isUpdateTask } });
     }
 
-    res.json(new Response({ transaction }));
+    res.json(new Response({ transaction, balance: updatedWallet.balance }));
   } catch (error) {
     next(error);
   }
