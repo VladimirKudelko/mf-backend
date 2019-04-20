@@ -8,7 +8,7 @@ export const createTransaction: Controller = async(req, res, next) => {
     const { params: { userId }, body } = req;
     const transaction = await transactionHelper.create({ userId, ...body });
     const wallet = await walletHelper.getById(body.walletId);
-    const balance = body.type === CategoryTypeEnum.Expenses
+    const balance = body.type === CategoryTypeEnum.Incomes
       ? wallet.balance + body.amountMoney
       : wallet.balance - body.amountMoney;
 
