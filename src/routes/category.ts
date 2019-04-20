@@ -11,21 +11,21 @@ const router = express.Router();
 router.get('/expenses/:userId', authenticate, expressJoi(retrievingViaUseIdSchema), getExpensesCategories);
 router.get('/incomes/:userId', authenticate, expressJoi(retrievingViaUseIdSchema), getIncomesCategories);
 router.post('/:userId', authenticate, expressJoi(creationCategorySchema), createCategory);
-router.post('/', authenticate, async(req, res, next) => {
+router.post('/', async(req, res, next) => {
   const categories = [
-    { isDefault: true, title: 'Presents', type: 'Expenses' },
-    { isDefault: true, title: 'Salary', type: 'Expenses' },
-    { isDefault: true, title: 'Savings', type: 'Expenses' },
-    { isDefault: true, title: 'Food', type: 'Incomes' },
-    { isDefault: true, title: 'Health', type: 'Incomes' },
-    { isDefault: true, title: 'Car', type: 'Incomes' },
-    { isDefault: true, title: 'Clothes', type: 'Incomes' },
-    { isDefault: true, title: 'Pets', type: 'Incomes' },
-    { isDefault: true, title: 'Presents', type: 'Incomes' },
-    { isDefault: true, title: 'Sport', type: 'Incomes' },
-    { isDefault: true, title: 'Transport', type: 'Incomes' },
-    { isDefault: true, title: 'Housing', type: 'Incomes' },
-    { isDefault: true, title: 'Hygiene', type: 'Incomes' }
+    { isDefault: true, title: 'Presents', icon: 'gift', type: 'Incomes' },
+    { isDefault: true, title: 'Salary', icon: 'coins', type: 'Incomes' },
+    { isDefault: true, title: 'Savings', icon: 'piggy-bank', type: 'Incomes' },
+    { isDefault: true, title: 'Food', icon: 'restaurant', type: 'Expenses' },
+    { isDefault: true, title: 'Health', icon: 'heartbeat', type: 'Expenses' },
+    { isDefault: true, title: 'Car', icon: 'car', type: 'Expenses' },
+    { isDefault: true, title: 'Clothes', icon: 'tshirt', type: 'Expenses' },
+    { isDefault: true, title: 'Pets', icon: 'dog', type: 'Expenses' },
+    { isDefault: true, title: 'Presents', icon: 'gift', type: 'Expenses' },
+    { isDefault: true, title: 'Sport', icon: 'dumbbell', type: 'Expenses' },
+    { isDefault: true, title: 'Transport', icon: 'bus-alt', type: 'Expenses' },
+    { isDefault: true, title: 'Housing', icon: 'home', type: 'Expenses' },
+    { isDefault: true, title: 'Hygiene', icon: 'tooth', type: 'Expenses' }
   ];
 
   const categoriesNew = await Category.insertMany(categories);
