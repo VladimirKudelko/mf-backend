@@ -5,6 +5,7 @@ import cashRouter from './cash';
 import categoryRouter from './category';
 import transactionRouter from './transaction';
 import profileRouter from './profile';
+import userRouter from './user';
 
 const router = express.Router();
 
@@ -13,5 +14,6 @@ router.use('/cash', cashRouter);
 router.use('/category', categoryRouter);
 router.use('/profile', profileRouter);
 router.use('/transactions', transactionRouter);
+router.use('/user', userRouter);
 
 export default router;

@@ -16,7 +16,7 @@ router.post('/', async(req, res, next) => {
     { isDefault: true, title: 'Presents', icon: 'gift', type: 'Incomes' },
     { isDefault: true, title: 'Salary', icon: 'coins', type: 'Incomes' },
     { isDefault: true, title: 'Savings', icon: 'piggy-bank', type: 'Incomes' },
-    { isDefault: true, title: 'Food', icon: 'restaurant', type: 'Expenses' },
+    { isDefault: true, title: 'Food', icon: 'utensils', type: 'Expenses' },
     { isDefault: true, title: 'Health', icon: 'heartbeat', type: 'Expenses' },
     { isDefault: true, title: 'Car', icon: 'car', type: 'Expenses' },
     { isDefault: true, title: 'Clothes', icon: 'tshirt', type: 'Expenses' },

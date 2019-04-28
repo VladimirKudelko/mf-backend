@@ -25,6 +25,8 @@ export const verifyAdminRole: Controller = (req, res, next) => {
   try {
     if (!!req.user && req.user.role === RoleEnum.Admin) {
       next();
+
+      return;
     }
 
     throw new ErrorModel(httpStatus.FORBIDDEN, ErrorMessageEnum.NoAdminPermissions);
