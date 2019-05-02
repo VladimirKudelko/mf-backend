@@ -27,10 +27,21 @@ export const createTransaction: Controller = async(req, res, next) => {
   }
 };
 
-export const getUserTransactions: Controller = async(req, res, next) => {
+export const getUserTransactionsByInterval: Controller = async(req, res, next) => {
   try {
     const { params: { userId }, query: { period } } = req;
     const transactions = await transactionHelper.getByInterval(userId, period);
+
+    res.json(new Response({ transactions }));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getUserTransactionsByPeriod: Controller = async(req, res, next) => {
+  try {
+    const { params: { userId }, query: { startDate, endDate } } = req;
+    const transactions = await transactionHelper.getByPeriod(userId, startDate, endDate);
 
     res.json(new Response({ transactions }));
   } catch (error) {

@@ -16,3 +16,13 @@ export const creationTransactionSchema = {
     isUpdateTask: Joi.boolean()
   }
 };
+
+export const retrieveTransactionsByPeriodSchema = {
+  params: {
+    userId: Joi.string().required()
+  },
+  query: {
+    startDate: Joi.string().required(),
+    endDate: Joi.string().required()
+  }
+};
