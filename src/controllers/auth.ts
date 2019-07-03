@@ -1,10 +1,13 @@
 
 import * as passport from 'passport';
 import * as _ from 'lodash';
+import * as xml2js from 'xml2js';
+import * as httpStatus from 'http-status-codes';
 
 import { authHelper, walletHelper } from '../db/helpers';
 import { Controller } from '../types';
-import { Response } from '../models';
+import { Response, ErrorModel } from '../models';
+import { ErrorMessageEnum } from '../enums';
 
 export const registerUser: Controller = async(req, res, next) => {
   try {
@@ -40,4 +43,24 @@ export const loginUser: Controller = async(req, res, next) => {
       next(error);
     }
   })(req, res, next);
+};
+
+export const logoutUser: Controller = async(req, res, next) => {
+  try {
+    const parser = new xml2js.Parser({ attrkey: 'ATTR' });
+    const { body: { envelope } } = req;
+    let userId = null;
+
+    parser.parseString(envelope, (error, result) => {
+      if (error) {
+        throw new ErrorModel(httpStatus.BAD_REQUEST, ErrorMessageEnum.Unauthorized);
+      }
+
+      userId = result['soapenv:Envelope']['soapenv:Body'][0]['api:some_api_call'][0].userId[0]['_'];
+    });
+
+    res.json(new Response({ userId }));
+  } catch (error) {
+    next(error);
+  }
 };

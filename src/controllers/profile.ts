@@ -42,7 +42,7 @@ export const updateSettings: Controller = async(req, res, next) => {
 
 export const changePassword: Controller = async(req, res, next) => {
   try {
-    const { params: { userId }, body: { lastPassword, newPassword, isUpdateTask }, user } = req;
+    const { body: { lastPassword, newPassword, isUpdateTask }, user } = req;
     const isMatchedPasswords = await bcrypt.compare(lastPassword, user.password);
 
     if (!isMatchedPasswords) {

@@ -11,9 +11,7 @@ export const createCategory: Controller = async(req, res, next) => {
       await authHelper.updateById(req.user._id, { $set: { 'tasks.1.isCompleted': body.isUpdateTask } });
     }
 
-    res.json(new Response({
-      category
-    }));
+    res.json(new Response({ category }));
   } catch (error) {
     next(error);
   }
