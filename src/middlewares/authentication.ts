@@ -4,7 +4,7 @@ import * as httpStatus from 'http-status-codes';
 
 import { Controller } from '../types';
 import { ErrorMessageEnum, RoleEnum } from '../enums';
-import { ErrorModel } from '../models';
+import { ErrorModel, UserDocument } from '../models';
 
 export const authenticate: Controller = (req, res, next) => {
   passport.authenticate('jwt', (err, user) => {
@@ -23,7 +23,9 @@ export const authenticate: Controller = (req, res, next) => {
 
 export const verifyAdminRole: Controller = (req, res, next) => {
   try {
-    if (!!req.user && req.user.role === RoleEnum.Admin) {
+    const user = req.user as UserDocument;
+
+    if (user && user.role === RoleEnum.Admin) {
       next();
 
       return;

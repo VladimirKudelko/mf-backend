@@ -1,6 +1,6 @@
 import { Controller } from '../types';
 import { categoryHelper, authHelper } from '../db/helpers';
-import { Response } from '../models';
+import { Response, UserDocument } from '../models';
 
 export const createCategory: Controller = async(req, res, next) => {
   try {
@@ -8,7 +8,9 @@ export const createCategory: Controller = async(req, res, next) => {
     const category = await categoryHelper.create({ ...body, userId });
 
     if (body.isUpdateTask) {
-      await authHelper.updateById(req.user._id, { $set: { 'tasks.1.isCompleted': body.isUpdateTask } });
+      const { _id } = req.user as UserDocument;
+
+      await authHelper.updateById(_id, { $set: { 'tasks.1.isCompleted': body.isUpdateTask } });
     }
 
     res.json(new Response({ category }));

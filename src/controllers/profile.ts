@@ -4,7 +4,7 @@ import * as httpStatus from 'http-status-codes';
 
 import { Controller } from '../types';
 import { authHelper } from '../db/helpers';
-import { Response, ErrorModel } from '../models';
+import { Response, ErrorModel, UserDocument } from '../models';
 import { ErrorMessageEnum } from '../enums';
 import { encrypt } from '../utils';
 
@@ -42,7 +42,8 @@ export const updateSettings: Controller = async(req, res, next) => {
 
 export const changePassword: Controller = async(req, res, next) => {
   try {
-    const { body: { lastPassword, newPassword, isUpdateTask }, user } = req;
+    const { body: { lastPassword, newPassword, isUpdateTask } } = req;
+    const user = req.user as UserDocument;
     const isMatchedPasswords = await bcrypt.compare(lastPassword, user.password);
 
     if (!isMatchedPasswords) {

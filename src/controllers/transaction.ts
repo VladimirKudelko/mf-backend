@@ -1,7 +1,7 @@
 import { Controller } from '../types';
 import { transactionHelper, walletHelper, authHelper } from '../db/helpers';
 import { CategoryTypeEnum } from '../enums';
-import { Response } from '../models';
+import { Response, UserDocument } from '../models';
 import { pushNewBalance } from '../socket';
 
 export const createTransaction: Controller = async(req, res, next) => {
@@ -21,7 +21,9 @@ export const createTransaction: Controller = async(req, res, next) => {
     ).select({ balance: 1, _id: 0 });
 
     if (body.isUpdateTask) {
-      await authHelper.updateById(req.user._id, { $set: { 'tasks.2.isCompleted': body.isUpdateTask } });
+      const { _id } = req.user as UserDocument;
+
+      await authHelper.updateById(_id, { $set: { 'tasks.2.isCompleted': body.isUpdateTask } });
     }
 
     res.json(new Response({

@@ -2,11 +2,11 @@ import * as _ from 'lodash';
 
 import { authHelper } from '../db/helpers';
 import { Controller } from '../types';
-import { Response } from '../models';
+import { Response, UserDocument } from '../models';
 
 export const getAllUsers: Controller = async(req, res, next) => {
   try {
-    const { user: { _id } } = req;
+    const { _id } = req.user as UserDocument;
     const users = await authHelper.getAllWithoutCurrentUser(_id).select({ password: 0, tasks: 0 });
 
     res.json(new Response({ users }));
