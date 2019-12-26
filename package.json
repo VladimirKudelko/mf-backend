@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "cross-env EMAIL=sozidatel0001@gmail.com EMAIL_PASSWORD=vnkudelko1998 nodemon --exec ts-node index.ts",
+    "start": "cross-env EMAIL=vladimir.kudelko1998@gmail.com EMAIL_PASSWORD=vnkudelko1998 nodemon --exec ts-node index.ts",
     "dev": "nodemon --exec ts-node index.ts"
   },
   "dependencies": {
@@ -19,6 +19,7 @@
     "config": "^3.0.1",
     "cors": "^2.8.5",
     "cross-env": "^6.0.3",
+    "crypto": "^1.0.1",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "express-joi-validator": "^2.0.1",

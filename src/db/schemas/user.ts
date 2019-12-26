@@ -20,6 +20,11 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+  isEmailVerified: {
+    type: Boolean,
+    default: false
+  },
+  hash: String,
   password: {
     type: String,
     required: true
@@ -41,7 +46,7 @@ const userSchema = new mongoose.Schema({
       { key: 'money', description: 'Track money', content: 'Some content', isCompleted: false },
       { key: 'settings', description: 'Change settings', content: 'Some content', isCompleted: false }
     ]
-  }
+  },
 }, { versionKey: false });
 
 userSchema.methods.encryptPassword = async function(password) {

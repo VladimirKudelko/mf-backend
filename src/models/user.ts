@@ -6,6 +6,8 @@ export interface UserDocument extends mongoose.Document {
   firstName: string;
   lastName: string;
   email: string;
+  isEmailVerified: boolean;
+  hash: string;
   password: string;
   createdDate: Date;
   tasks: Task[];
