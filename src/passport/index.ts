@@ -32,10 +32,14 @@ passport.use(new LocalStrategy.Strategy({
   return done(null, user);
 }));
 
-passport.use('jwt', new JWTStrategy({
+passport.use(
+  'jwt',
+  new JWTStrategy({
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
     secretOrKey: config.get('secretKey')
-  }, (jwtPayload, cb) => User.findById(jwtPayload._id)
-      .then(user => cb(null, user))
-      .catch(err => cb(err))
+  },
+  (jwtPayload, cb) => User
+    .findById(jwtPayload._id)
+    .then(user => cb(null, user))
+    .catch(err => cb(err))
 ));

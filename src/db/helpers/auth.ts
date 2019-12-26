@@ -9,7 +9,7 @@ const create = async(data: UserDocument) => {
   return user.save();
 };
 
-const getAll = () => User.find();
+const getAll = (query: object = {}) => User.find(query);
 
 const getAllWithoutCurrentUser = (id: string) => User.find({ _id: { $ne: id } });
 
