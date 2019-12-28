@@ -1,6 +1,7 @@
 import * as bcrypt from 'bcrypt';
 import * as config from 'config';
 import * as jwt from 'jsonwebtoken';
+import * as uniqueValidator from 'mongoose-unique-validator';
 
 import mongoose from '../../context';
 import { UserDocument } from '../../models';
@@ -60,5 +61,7 @@ userSchema.methods.validatePassword = async function(password) {
 userSchema.methods.generateJWT = function() {
   return `bearer ${ jwt.sign(this.toObject(), config.get('secretKey'), { expiresIn: 86400000 }) }`;
 };
+
+userSchema.plugin(uniqueValidator, { message: '{PATH} must be unique' });
 
 export default mongoose.model<UserDocument>('user', userSchema);

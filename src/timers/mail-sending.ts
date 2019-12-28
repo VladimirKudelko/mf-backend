@@ -83,12 +83,7 @@ export const sendReportCallback = async() => {
   });
   const mailOptions = {
     from: 'vladimir.kudelko1998@gmail.com',
-    subject: `Month's expenses`,
-    // attachments: [{
-    //   filename: 'file.pdf',
-    //   path: 'C:/Users/Username/Desktop/somefile.pdf',
-    //   contentType: 'application/pdf'
-    // }],
+    subject: `Month's expenses`
   };
 
   for (const user of users) {

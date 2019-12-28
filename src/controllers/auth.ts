@@ -48,23 +48,3 @@ export const loginUser: Controller = async(req, res, next) => {
     }
   })(req, res, next);
 };
-
-export const logoutUser: Controller = async(req, res, next) => {
-  try {
-    const parser = new xml2js.Parser({ attrkey: 'ATTR' });
-    const { body: { envelope } } = req;
-    let userId = null;
-
-    parser.parseString(envelope, (error, result) => {
-      if (error) {
-        throw new ErrorModel(httpStatus.BAD_REQUEST, ErrorMessageEnum.Unauthorized);
-      }
-
-      userId = result['soapenv:Envelope']['soapenv:Body'][0]['api:some_api_call'][0].userId[0]['_'];
-    });
-
-    res.json(new Response({ userId }));
-  } catch (error) {
-    next(error);
-  }
-};
