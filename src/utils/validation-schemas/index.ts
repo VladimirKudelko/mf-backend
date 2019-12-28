@@ -2,7 +2,8 @@ import {
   authenticationUserSchema,
   creationUserSchema,
   changeUserSettingsSchema,
-  changePasswordSchema
+  changePasswordSchema,
+  verifyEmailSchema
 } from './user';
 import { retrievingViaUseIdSchema } from './common';
 import { creationCategorySchema } from './category';
@@ -16,5 +17,6 @@ export {
   changeUserSettingsSchema,
   changePasswordSchema,
   retrievingViaUseIdSchema,
-  retrieveTransactionsByPeriodSchema
+  retrieveTransactionsByPeriodSchema,
+  verifyEmailSchema
 };

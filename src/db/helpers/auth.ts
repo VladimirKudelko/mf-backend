@@ -15,6 +15,8 @@ const getAllWithoutCurrentUser = (id: string) => User.find({ _id: { $ne: id } })
 
 const getById = (userId: string) => User.findById(userId);
 
+const getOneByQuery = (query: object) => User.findOne(query);
+
 const getByEmail = (email: string) => User.findOne({ email });
 
 const updateById = (userId: string, data: UserDocument | any) =>
@@ -29,5 +31,6 @@ export default {
   getAllWithoutCurrentUser,
   getByEmail,
   getById,
+  getOneByQuery,
   updateById
 };

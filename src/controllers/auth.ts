@@ -1,15 +1,14 @@
 
 import * as passport from 'passport';
 import * as _ from 'lodash';
-import * as xml2js from 'xml2js';
-import * as httpStatus from 'http-status-codes';
 import * as crypto from 'crypto';
+import * as httpStatus from 'http-status-codes';
 
 import { authHelper, walletHelper } from '../db/helpers';
 import { Controller } from '../types';
 import { Response, ErrorModel } from '../models';
-import { ErrorMessageEnum } from '../enums';
 import { sendMail, someContent } from '../utils/mail';
+import { ErrorMessageEnum } from '../enums';
 
 export const registerUser: Controller = async(req, res, next) => {
   try {
@@ -39,7 +38,7 @@ export const loginUser: Controller = async(req, res, next) => {
 
       user.password = undefined;
 
-      return res.json(new Response({
+      res.json(new Response({
         token: user.generateJWT(),
         user: user.toJSON(),
       }));
@@ -47,4 +46,25 @@ export const loginUser: Controller = async(req, res, next) => {
       next(error);
     }
   })(req, res, next);
+};
+
+export const verifyEmail: Controller = async(req, res, next) => {
+  try {
+    const { body: { email, hash } } = req;
+    const user = await authHelper.getOneByQuery({ email, hash });
+
+    if (!user) {
+      throw new ErrorModel(
+        httpStatus.FORBIDDEN,
+        ErrorMessageEnum.IncorrectData,
+        { isVerified: false }
+      );
+    }
+
+    await authHelper.updateById(user._id, { isEmailVerified: true });
+
+    res.json({ isVerified: true });
+  } catch (error) {
+    next(error);
+  }
 };

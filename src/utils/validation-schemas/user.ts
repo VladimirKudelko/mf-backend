@@ -41,3 +41,10 @@ export const changePasswordSchema = {
     isUpdateTask: Joi.boolean()
   }
 };
+
+export const verifyEmailSchema = {
+  body: {
+    email: Joi.string().email().required(),
+    hash: Joi.string().length(32).error(new Error('Hash must consist of 32 characters!')),
+  }
+};
