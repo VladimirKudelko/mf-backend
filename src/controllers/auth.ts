@@ -17,7 +17,9 @@ export const registerUser: Controller = async(req, res, next) => {
 
   await walletHelper.create({ userId: createdUser._id });
   sendMail('Email Verification', createdUser.email, someContent(createdUser.firstName, createdUser.email, hash));
+
   createdUser.password = undefined;
+  createdUser.hash = undefined;
 
   res.json(new Response({
     token: createdUser.generateJWT(),
@@ -33,6 +35,7 @@ export const loginUser: Controller = async(req, res, next) => {
       }
 
       user.password = undefined;
+      user.hash = undefined;
 
       res.json(new Response({
         token: user.generateJWT(),

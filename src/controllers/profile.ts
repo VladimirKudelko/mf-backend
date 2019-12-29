@@ -10,7 +10,7 @@ import { encrypt } from '../utils';
 
 export const getUserProfile: Controller = async(req, res, next) => {
   const { userId } = req.params;
-  const user = await authHelper.getById(userId);
+  const user = await authHelper.getById(userId).select({ hash: 0, password: 0 });
 
   res.json(new Response({ user }));
 };
