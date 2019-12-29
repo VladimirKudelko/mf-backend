@@ -9,7 +9,7 @@ import notFoundHandler from './not-found';
 
 export default app => {
   app.use(rateLimit({
-    windowMs: 15 * 60 * 1000, // TODO: it's possible to limit amount of changing a password
+    windowMs: 15 * 60 * 1000,
     max: 150,
     skipFailedRequests: true
   }));

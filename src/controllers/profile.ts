@@ -41,10 +41,10 @@ export const changePassword: Controller = async(req, res, next) => {
     throw new ErrorModel(httpStatus.BAD_REQUEST, ErrorMessageEnum.IncorrectPassword);
   }
 
-  const condition = isUpdateTask
+  const dataToUpdate = isUpdateTask
     ? { password: await encrypt(newPassword), $set: { 'tasks.3.isCompleted': isUpdateTask } }
     : { password: await encrypt(newPassword) };
-  const updatedUser = await authHelper.updateById(user._id, condition);
+  const updatedUser = await authHelper.updateById(user._id, dataToUpdate);
 
   res.json(new Response({ updatedUser }));
 };
