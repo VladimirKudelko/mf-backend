@@ -9,54 +9,42 @@ import { ErrorMessageEnum } from '../enums';
 import { encrypt } from '../utils';
 
 export const getUserProfile: Controller = async(req, res, next) => {
-  try {
-    const { userId } = req.params;
-    const user = await authHelper.getById(userId);
+  const { userId } = req.params;
+  const user = await authHelper.getById(userId);
 
-    res.json(new Response({ user }));
-  } catch (error) {
-    next(error);
-  }
+  res.json(new Response({ user }));
 };
 
 export const updateSettings: Controller = async(req, res, next) => {
-  try {
-    const { params: { userId }, body } = req;
-    const condition = body.isUpdateTask
-      ? { ...body, $set: { 'tasks.3.isCompleted': body.isUpdateTask } }
-      : body;
-    const updatedUser = await authHelper.updateById(userId, condition);
+  const { params: { userId }, body } = req;
+  const condition = body.isUpdateTask
+    ? { ...body, $set: { 'tasks.3.isCompleted': body.isUpdateTask } }
+    : body;
+  const updatedUser = await authHelper.updateById(userId, condition);
 
-    if (!_.isEmpty(updatedUser)) {
-      updatedUser.password = undefined;
-    }
-
-    res.json(new Response({
-      updatedUser,
-      isUpdated: !_.isEmpty(updatedUser)
-    }));
-  } catch (error) {
-    next(error);
+  if (!_.isEmpty(updatedUser)) {
+    updatedUser.password = undefined;
   }
+
+  res.json(new Response({
+    updatedUser,
+    isUpdated: !_.isEmpty(updatedUser)
+  }));
 };
 
 export const changePassword: Controller = async(req, res, next) => {
-  try {
-    const { body: { lastPassword, newPassword, isUpdateTask } } = req;
-    const user = req.user as UserDocument;
-    const isMatchedPasswords = await bcrypt.compare(lastPassword, user.password);
+  const { body: { lastPassword, newPassword, isUpdateTask } } = req;
+  const user = req.user as UserDocument;
+  const isMatchedPasswords = await bcrypt.compare(lastPassword, user.password);
 
-    if (!isMatchedPasswords) {
-      throw new ErrorModel(httpStatus.BAD_REQUEST, ErrorMessageEnum.IncorrectPassword);
-    }
-
-    const condition = isUpdateTask
-      ? { password: await encrypt(newPassword), $set: { 'tasks.3.isCompleted': isUpdateTask } }
-      : { password: await encrypt(newPassword) };
-    const updatedUser = await authHelper.updateById(user._id, condition);
-
-    res.json(new Response({ updatedUser }));
-  } catch (error) {
-    next(error);
+  if (!isMatchedPasswords) {
+    throw new ErrorModel(httpStatus.BAD_REQUEST, ErrorMessageEnum.IncorrectPassword);
   }
+
+  const condition = isUpdateTask
+    ? { password: await encrypt(newPassword), $set: { 'tasks.3.isCompleted': isUpdateTask } }
+    : { password: await encrypt(newPassword) };
+  const updatedUser = await authHelper.updateById(user._id, condition);
+
+  res.json(new Response({ updatedUser }));
 };

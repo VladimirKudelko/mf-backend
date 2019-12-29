@@ -1,5 +1,6 @@
 import * as express from 'express';
 import * as expressJoi from 'express-joi-validator';
+import * as asyncHandler from 'express-async-handler';
 
 import { createCategory, getExpensesCategories, getIncomesCategories } from '../controllers/category';
 import { authenticate } from '../middlewares/authentication';
@@ -8,10 +9,15 @@ import { Category } from '../db/schemas';
 
 const router = express.Router();
 
-router.get('/expenses/:userId', authenticate, expressJoi(retrievingViaUseIdSchema), getExpensesCategories);
-router.get('/incomes/:userId', authenticate, expressJoi(retrievingViaUseIdSchema), getIncomesCategories);
-router.post('/:userId', authenticate, expressJoi(creationCategorySchema), createCategory);
-router.post('/', async(req, res, next) => {
+router.get(
+  '/expenses/:userId',
+  authenticate,
+  expressJoi(retrievingViaUseIdSchema),
+  asyncHandler(getExpensesCategories)
+);
+router.get('/incomes/:userId', authenticate, expressJoi(retrievingViaUseIdSchema), asyncHandler(getIncomesCategories));
+router.post('/:userId', authenticate, expressJoi(creationCategorySchema), asyncHandler(createCategory));
+router.post('/', asyncHandler(async(req, res, next) => {
   const categories = [
     { isDefault: true, title: 'Presents', icon: 'gift', type: 'Incomes' },
     { isDefault: true, title: 'Salary', icon: 'coins', type: 'Incomes' },
@@ -31,6 +37,6 @@ router.post('/', async(req, res, next) => {
   const categoriesNew = await Category.insertMany(categories);
 
   res.json({categoriesNew});
-});
+}));
 
 export default router;

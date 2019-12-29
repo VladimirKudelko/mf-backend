@@ -11,22 +11,18 @@ import { sendMail, someContent } from '../utils/mail';
 import { ErrorMessageEnum } from '../enums';
 
 export const registerUser: Controller = async(req, res, next) => {
-  try {
-    const { body } = req;
-    const hash = crypto.createHash('md5').update('some_string').digest('hex');
-    const createdUser = await authHelper.create({ hash, ...body });
+  const { body } = req;
+  const hash = crypto.createHash('md5').update('some_string').digest('hex');
+  const createdUser = await authHelper.create({ hash, ...body });
 
-    await walletHelper.create({ userId: createdUser._id });
-    sendMail('Email Verification', createdUser.email, someContent(createdUser.firstName, createdUser.email, hash));
-    createdUser.password = undefined;
+  await walletHelper.create({ userId: createdUser._id });
+  sendMail('Email Verification', createdUser.email, someContent(createdUser.firstName, createdUser.email, hash));
+  createdUser.password = undefined;
 
-    res.json(new Response({
-      token: createdUser.generateJWT(),
-      user: createdUser.toJSON(),
-    }));
-  } catch (error) {
-    next(error);
-  }
+  res.json(new Response({
+    token: createdUser.generateJWT(),
+    user: createdUser.toJSON(),
+  }));
 };
 
 export const loginUser: Controller = async(req, res, next) => {
@@ -49,22 +45,18 @@ export const loginUser: Controller = async(req, res, next) => {
 };
 
 export const verifyEmail: Controller = async(req, res, next) => {
-  try {
-    const { body: { email, hash } } = req;
-    const user = await authHelper.getOneByQuery({ email, hash });
+  const { body: { email, hash } } = req;
+  const user = await authHelper.getOneByQuery({ email, hash });
 
-    if (!user) {
-      throw new ErrorModel(
-        httpStatus.FORBIDDEN,
-        ErrorMessageEnum.IncorrectData,
-        { isVerified: false }
-      );
-    }
-
-    await authHelper.updateById(user._id, { isEmailVerified: true });
-
-    res.json({ isVerified: true });
-  } catch (error) {
-    next(error);
+  if (!user) {
+    throw new ErrorModel(
+      httpStatus.FORBIDDEN,
+      ErrorMessageEnum.IncorrectData,
+      { isVerified: false }
+    );
   }
+
+  await authHelper.updateById(user._id, { isEmailVerified: true });
+
+  res.json({ isVerified: true });
 };
