@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "cross-env EMAIL=vladimir.kudelko1998@gmail.com EMAIL_PASSWORD=vnkudelko1998 nodemon --exec ts-node index.ts",
-    "dev": "nodemon --exec ts-node index.ts"
+    "migrate-status": "cd ./mongo-migrations && migrate-mongo status",
+    "migrate-up": "cd ./mongo-migrations && migrate-mongo up",
+    "migrate-down": "cd ./mongo-migrations && migrate-mongo down"
   },
   "dependencies": {
     "@types/joi": "^14.3.2",
@@ -29,6 +31,7 @@
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.0",
     "lodash": "^4.17.11",
+    "migrate-mongo": "^7.0.1",
     "moment": "^2.24.0",
     "mongodb": "^3.1.13",
     "mongoose": "^5.4.7",

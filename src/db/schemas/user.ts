@@ -6,6 +6,7 @@ import * as uniqueValidator from 'mongoose-unique-validator';
 import mongoose from '../../context';
 import { UserDocument } from '../../models';
 import { RoleEnum } from '../../enums';
+import { userTasks } from '../../constants/user-tasks';
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -41,12 +42,7 @@ const userSchema = new mongoose.Schema({
   },
   tasks: {
     type: Array,
-    default: [
-      { key: 'signup', description: 'Sign Up', content: 'Some content', isCompleted: true },
-      { key: 'category', description: 'Create your first category', content: 'Some content', isCompleted: false },
-      { key: 'money', description: 'Track money', content: 'Some content', isCompleted: false },
-      { key: 'settings', description: 'Change settings', content: 'Some content', isCompleted: false }
-    ]
+    default: userTasks
   },
 }, { versionKey: false });
 
