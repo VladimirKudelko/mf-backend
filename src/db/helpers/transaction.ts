@@ -18,13 +18,14 @@ const getByInterval = (userId: string, period: TransactionPeriodEnum) => Transac
   }
 );
 
-const getByPeriod = (userId: string, startDate: string, endDate: string) => Transaction.find(
+const getByPeriod = (userId: string, startDate: string, endDate: string, conditions = {}) => Transaction.find(
   {
     userId,
     createdDate: {
       $gte: startDate,
       $lt: endDate
-    }
+    },
+    ...conditions
   }
 );
 

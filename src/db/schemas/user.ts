@@ -5,7 +5,7 @@ import * as uniqueValidator from 'mongoose-unique-validator';
 
 import mongoose from '../../context';
 import { UserDocument } from '../../models';
-import { RoleEnum } from '../../enums';
+import { RoleEnum, CurrencyEnum } from '../../enums';
 import { userTasks } from '../../constants/user-tasks';
 
 const userSchema = new mongoose.Schema({
@@ -44,6 +44,21 @@ const userSchema = new mongoose.Schema({
     type: Array,
     default: userTasks
   },
+  currency: {
+    type: String,
+    enum: [CurrencyEnum.AmericanDollar, CurrencyEnum.Euro, CurrencyEnum.BelarusianRuble, CurrencyEnum.RussianRuble],
+    default: CurrencyEnum.AmericanDollar
+  },
+  budget: {
+    type: {
+      allExpenses: mongoose.Schema.Types.ObjectId,
+      category: Object,
+    },
+    default: {
+      allExpenses: null,
+      category: null
+    }
+  }
 }, { versionKey: false });
 
 userSchema.methods.encryptPassword = async function(password) {

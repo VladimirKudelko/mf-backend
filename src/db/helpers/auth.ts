@@ -1,4 +1,4 @@
-import { User } from '../schemas';
+import { User, Budget } from '../schemas';
 import { UserDocument } from '../../models';
 
 const create = async(data: UserDocument) => {
@@ -13,7 +13,8 @@ const getAll = (query: object = {}) => User.find(query);
 
 const getAllWithoutCurrentUser = (id: string) => User.find({ _id: { $ne: id } });
 
-const getById = (userId: string) => User.findById(userId);
+const getById = (userId: string) => User.findById(userId)
+  .populate({ path: 'budget.allExpenses', model: Budget });
 
 const getOneByQuery = (query: object) => User.findOne(query);
 

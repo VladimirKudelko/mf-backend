@@ -5,12 +5,14 @@ import * as asyncHandler from 'express-async-handler';
 import {
   createTransaction,
   getUserTransactionsByInterval,
-  getUserTransactionsByPeriod
+  getUserTransactionsByPeriod,
+  getUserExpenses
 } from '../controllers/transaction';
 import {
   creationTransactionSchema,
   retrievingViaUseIdSchema,
-  retrieveTransactionsByPeriodSchema
+  retrieveTransactionsByPeriodSchema,
+  retrieveUserExpensesSchema
 } from '../utils/validation-schemas';
 import { authenticate } from '../middlewares/authentication';
 
@@ -26,7 +28,13 @@ router.get(
   '/user/:userId/date',
   authenticate,
   expressJoi(retrieveTransactionsByPeriodSchema),
-  getUserTransactionsByPeriod
+  asyncHandler(getUserTransactionsByPeriod)
+);
+router.get(
+  '/expenses-summary',
+  authenticate,
+  expressJoi(retrieveUserExpensesSchema),
+  asyncHandler(getUserExpenses)
 );
 router.post('/:userId', authenticate, expressJoi(creationTransactionSchema), asyncHandler(createTransaction));
 

@@ -10,7 +10,7 @@ const walletSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: [ WalletTypeEnum.Default, WalletTypeEnum.CreditCard ],
+    enum: [WalletTypeEnum.Default, WalletTypeEnum.CreditCard],
     default: WalletTypeEnum.Default
   },
   balance: {
@@ -19,7 +19,7 @@ const walletSchema = new mongoose.Schema({
   },
   currency: {
     type: String,
-    enum: [ CurrencyEnum.AmericanDollar, CurrencyEnum.Euro, CurrencyEnum.BelarusianRuble, CurrencyEnum.RussianRuble ],
+    enum: [CurrencyEnum.AmericanDollar, CurrencyEnum.Euro, CurrencyEnum.BelarusianRuble, CurrencyEnum.RussianRuble],
     default: CurrencyEnum.AmericanDollar
   },
   createdDate: {

@@ -11,6 +11,10 @@ export interface UserDocument extends mongoose.Document {
   password: string;
   createdDate: Date;
   tasks: Task[];
+  budget: {
+    allExpenses: string,
+    category: Object
+  };
   role?: RoleEnum;
   encryptPassword(password: string): void;
   validatePassword(password: string): boolean;

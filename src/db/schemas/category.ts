@@ -10,7 +10,7 @@ const categorySchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: [ CategoryTypeEnum.Expenses, CategoryTypeEnum.Incomes ]
+    enum: [CategoryTypeEnum.Expenses, CategoryTypeEnum.Incomes]
   },
   icon: {
     type: String,

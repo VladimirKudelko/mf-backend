@@ -26,3 +26,10 @@ export const retrieveTransactionsByPeriodSchema = {
     endDate: Joi.string().required()
   }
 };
+
+export const retrieveUserExpensesSchema = {
+  query: {
+    from: Joi.string().required(),
+    to: Joi.string().required()
+  }
+};

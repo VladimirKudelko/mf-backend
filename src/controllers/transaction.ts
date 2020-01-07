@@ -44,3 +44,20 @@ export const getUserTransactionsByPeriod: Controller = async(req, res, next) => 
 
   res.json(new Response({ transactions }));
 };
+
+export const getUserExpenses: Controller = async(req, res, next) => {
+  const { query: { from, to } } = req;
+  const user = req.user as UserDocument;
+  const transactions = await transactionHelper.getByPeriod(user._id, from, to, { type: CategoryTypeEnum.Expenses });
+  const left = transactions.reduce(
+    (accumulator, currentValue) => accumulator + currentValue.amountMoney,
+    0
+  );
+
+  res.json(new Response({
+    from,
+    to,
+    transactions,
+    left
+  }));
+};

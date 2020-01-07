@@ -7,10 +7,12 @@ import {
 } from './user';
 import { retrievingViaUseIdSchema } from './common';
 import { creationCategorySchema } from './category';
-import { creationTransactionSchema, retrieveTransactionsByPeriodSchema } from './transaction';
+import { creationTransactionSchema, retrieveTransactionsByPeriodSchema, retrieveUserExpensesSchema } from './transaction';
+import { addNewBudgetSchema } from './profile';
 
 export {
   authenticationUserSchema,
+  addNewBudgetSchema,
   creationUserSchema,
   creationCategorySchema,
   creationTransactionSchema,
@@ -18,5 +20,6 @@ export {
   changePasswordSchema,
   retrievingViaUseIdSchema,
   retrieveTransactionsByPeriodSchema,
+  retrieveUserExpensesSchema,
   verifyEmailSchema
 };
