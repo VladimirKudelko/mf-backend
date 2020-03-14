@@ -32,8 +32,8 @@ export const createTransaction: Controller = async(req, res, next) => {
 };
 
 export const getUserTransactionsByInterval: Controller = async(req, res, next) => {
-  const { params: { userId }, query: { period } } = req;
-  const transactions = await transactionHelper.getByInterval(userId, period);
+  const { params: { userId }, query: { period, limit } } = req;
+  const transactions = await transactionHelper.getByInterval(userId, period).limit(+limit || 1000);
 
   res.json(new Response({ transactions }));
 };

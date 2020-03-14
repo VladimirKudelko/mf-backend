@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     default: RoleEnum.User,
-    enum: [ RoleEnum.User, RoleEnum.Admin ]
+    enum: [RoleEnum.User, RoleEnum.Admin]
   },
   tasks: {
     type: Array,

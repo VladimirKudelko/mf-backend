@@ -8,15 +8,20 @@ const create = (data: TransactionDocument) => Transaction.create(data);
 
 const getByUserId = (userId: string) => Transaction.find({ userId });
 
-const getByInterval = (userId: string, period: TransactionPeriodEnum) => Transaction.find(
-  {
-    userId,
-    createdDate: {
+const getByInterval = (userId: string, period: TransactionPeriodEnum) => {
+  const queryConditions: any = {
+    userId
+  };
+
+  if (period) {
+    queryConditions.createdDate = {
       $gte: moment().add(-1 as any, period),
       $lt: Date.now()
-    }
+    };
   }
-);
+
+  return Transaction.find(queryConditions);
+};
 
 const getByPeriod = (userId: string, startDate: string, endDate: string, conditions = {}) => Transaction.find(
   {

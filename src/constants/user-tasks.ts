@@ -8,10 +8,7 @@ export const userTasks = [
   {
     key: 'category',
     description: 'Create your first category',
-    content: `\
-      When you add your transaction you must specify which category this transaction belongs\
-      but if there is no such category you can create your custom category.\
-    `,
+    content: `When you add your transaction you must specify which category this transaction belongs but if there is no such category you can create your custom category.`,
     isCompleted: false
   },
   {
