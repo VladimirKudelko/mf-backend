@@ -6,7 +6,8 @@ import {
   createTransaction,
   getUserTransactionsByInterval,
   getUserTransactionsByPeriod,
-  getUserExpenses
+  getUserExpenses,
+  getNewestUserTransactions
 } from '../controllers/transaction';
 import {
   creationTransactionSchema,
@@ -23,6 +24,12 @@ router.get(
   authenticate,
   expressJoi(retrievingViaUseIdSchema),
   asyncHandler(getUserTransactionsByInterval)
+);
+router.get(
+  '/user/:userId/newest',
+  authenticate,
+  expressJoi(retrievingViaUseIdSchema),
+  asyncHandler(getNewestUserTransactions)
 );
 router.get(
   '/user/:userId/date',

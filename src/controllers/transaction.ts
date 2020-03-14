@@ -61,3 +61,10 @@ export const getUserExpenses: Controller = async(req, res, next) => {
     left
   }));
 };
+
+export const getNewestUserTransactions: Controller = async(req, res, next) => {
+  const { params: { userId }, query: { limit } } = req;
+  const transactions = await transactionHelper.getNewest(userId, +limit);
+
+  res.json(new Response({ transactions }));
+};
