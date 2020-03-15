@@ -7,6 +7,7 @@ import transactionRouter from './transaction';
 import profileRouter from './profile';
 import userRouter from './user';
 import budgetRouter from './budget';
+import currencyRouter from './currency';
 
 const router = express.Router();
 
@@ -17,5 +18,6 @@ router.use('/category', categoryRouter);
 router.use('/profile', profileRouter);
 router.use('/transactions', transactionRouter);
 router.use('/user', userRouter);
+router.use('/currencies', currencyRouter);
 
 export default router;

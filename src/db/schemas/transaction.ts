@@ -6,6 +6,7 @@ const transactionSchema = new mongoose.Schema({
   userId: mongoose.Schema.Types.ObjectId,
   walletId: mongoose.Schema.Types.ObjectId,
   categoryId: mongoose.Schema.Types.ObjectId,
+  currency: String,
   createdDate: {
     type: mongoose.Schema.Types.Date,
     default: new Date().toISOString()

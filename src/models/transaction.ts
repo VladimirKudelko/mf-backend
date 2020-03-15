@@ -7,6 +7,7 @@ export interface TransactionDocument extends mongoose.Document {
   categoryId: string;
   type: CategoryTypeEnum;
   note: string;
+  currency: string;
   amountMoney: number;
   createdDate?: Date;
 }

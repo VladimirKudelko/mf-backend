@@ -10,6 +10,7 @@ export interface UserDocument extends mongoose.Document {
   hash: string;
   password: string;
   createdDate: Date;
+  currency: string;
   tasks: Task[];
   budget: {
     allExpenses: string,

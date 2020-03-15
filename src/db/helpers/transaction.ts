@@ -8,14 +8,14 @@ const create = (data: TransactionDocument) => Transaction.create(data);
 
 const getByUserId = (userId: string) => Transaction.find({ userId });
 
-const getByInterval = (userId: string, period: TransactionPeriodEnum) => {
-  return Transaction.find({
+const getByInterval = (userId: string, period: TransactionPeriodEnum) =>
+  Transaction.find({
+    userId,
     createdDate: {
       $gte: moment().add(-1 as any, period),
       $lt: Date.now()
     }
   });
-};
 
 const getNewest = (userId: string, limit: number) => {
   return Transaction.find({ userId }, null, { sort: { createdDate: -1 }, limit });
