@@ -34,8 +34,21 @@ export const createTransaction: Controller = async(req, res, next) => {
 export const getUserTransactionsByInterval: Controller = async(req, res, next) => {
   const { params: { userId }, query: { period, limit } } = req;
   const transactions = await transactionHelper.getByInterval(userId, period).limit(+limit || 1000);
+  let totalExpenses = 0;
+  let totalIncomes = 0;
 
-  res.json(new Response({ transactions }));
+  transactions.forEach(transaction => {
+    switch (transaction.type) {
+      case CategoryTypeEnum.Expenses:
+        totalExpenses += transaction.amountMoney;
+        break;
+      case CategoryTypeEnum.Incomes:
+        totalIncomes += transaction.amountMoney;
+        break;
+    }
+  });
+
+  res.json(new Response({ transactions, totalExpenses, totalIncomes }));
 };
 
 export const getUserTransactionsByPeriod: Controller = async(req, res, next) => {
