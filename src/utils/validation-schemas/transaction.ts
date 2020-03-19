@@ -24,7 +24,8 @@ export const retrieveTransactionsByPeriodSchema = {
   },
   query: {
     startDate: Joi.string().required(),
-    endDate: Joi.string().required()
+    endDate: Joi.string().required(),
+    categoryType: Joi.string().required()
   }
 };
 

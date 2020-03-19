@@ -52,8 +52,8 @@ export const getUserTransactionsByInterval: Controller = async(req, res, next) =
 };
 
 export const getUserTransactionsByPeriod: Controller = async(req, res, next) => {
-  const { params: { userId }, query: { startDate, endDate } } = req;
-  const transactions = await transactionHelper.getByPeriod(userId, startDate, endDate);
+  const { params: { userId }, query: { startDate, endDate, categoryType } } = req;
+  const transactions = await transactionHelper.getByPeriod(userId, startDate, endDate, { type: categoryType });
 
   res.json(new Response({ transactions }));
 };
