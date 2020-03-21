@@ -4,10 +4,10 @@ import * as _ from 'lodash';
 import * as crypto from 'crypto';
 import * as httpStatus from 'http-status-codes';
 
-import { authHelper, walletHelper } from '../db/helpers';
+import { authHelper, walletHelper, userQuestionsHelper } from '../db/helpers';
 import { Controller } from '../types';
 import { Response, ErrorModel } from '../models';
-import { sendMail, someContent } from '../utils/mail';
+import { sendMail, getConfirmationEmailTemplate } from '../utils/mail';
 import { ErrorMessageEnum } from '../enums';
 
 export const registerUser: Controller = async(req, res, next) => {
@@ -16,7 +16,18 @@ export const registerUser: Controller = async(req, res, next) => {
   const createdUser = await authHelper.create({ hash, ...body });
 
   await walletHelper.create({ userId: createdUser._id });
-  sendMail('Email Verification', createdUser.email, someContent(createdUser.firstName, createdUser.email, hash));
+  await userQuestionsHelper.create({
+    userId: createdUser._id,
+    question1: body.question1,
+    question2: body.question2,
+    userEmail: body.email
+  });
+
+  sendMail(
+    'Email Verification',
+    createdUser.email,
+    getConfirmationEmailTemplate(createdUser.firstName, createdUser.email, hash)
+  );
 
   createdUser.password = undefined;
   createdUser.hash = undefined;

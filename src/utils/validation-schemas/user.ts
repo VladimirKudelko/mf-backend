@@ -15,7 +15,15 @@ export const creationUserSchema = {
     lastName: Joi.string().required(),
     email: Joi.string().email().required(),
     password: Joi.string().required(),
-    role: Joi.string().valid(RoleEnum.User, RoleEnum.Admin)
+    role: Joi.string().valid(RoleEnum.User, RoleEnum.Admin),
+    question1: Joi.object({
+      question: Joi.string().required(),
+      answer: Joi.string().required()
+    }),
+    question2: Joi.object({
+      question: Joi.string().required(),
+      answer: Joi.string().required()
+    })
   }
 };
 

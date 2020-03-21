@@ -28,7 +28,7 @@ export const sendMail = (subject: string, receiverEmail: string, html: string): 
   });
 };
 
-export const someContent = (firstName: string = '', email: string, hash: string): string => {
+export const getConfirmationEmailTemplate = (firstName: string = '', email: string, hash: string): string => {
   const confirmUrl = `http://localhost:4200/auth/verifyEmail?email=${email}&hash=${hash}`;
 
   return `
