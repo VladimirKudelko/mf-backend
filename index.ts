@@ -37,9 +37,9 @@ telegramBot.onText(/\/help/, (message, [source, match]) => {
   telegramBot.sendMessage(id, match);
 });
 
-io.on('connection', () => {
-  io.emit('hello', { hello: 'hello' });
+io.on('connection', (socketIO) => {
   console.log('New Socket Connection');
 });
 
 app.listen(port, () => console.log(`Server is starting on port - ${port}`));
+server.listen(8000);

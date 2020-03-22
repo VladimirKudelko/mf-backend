@@ -11,7 +11,7 @@ export const creationTransactionSchema = {
     categoryId: Joi.string().required(),
     type: Joi.string().valid(CategoryTypeEnum.Expenses, CategoryTypeEnum.Incomes).required(),
     amountMoney: Joi.number().required(),
-    note: Joi.string(),
+    note: Joi.string().allow(''),
     currency: Joi.string().required(),
     createdDate: Joi.date(),
     isUpdateTask: Joi.boolean()

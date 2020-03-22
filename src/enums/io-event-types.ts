@@ -1,3 +1,3 @@
 export enum IoEventTypesEnum {
-  BALANCE = 'BALANCE',
+  WALLET = 'WALLET',
 }
