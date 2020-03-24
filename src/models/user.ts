@@ -1,4 +1,7 @@
+import { ObjectID } from 'mongodb';
+
 import mongoose from '../context';
+
 import { RoleEnum } from '../enums';
 import { Task } from '.';
 
@@ -12,10 +15,7 @@ export interface UserDocument extends mongoose.Document {
   createdDate: Date;
   currency: string;
   tasks: Task[];
-  budget: {
-    allExpenses: string,
-    category: Object
-  };
+  budgets: ObjectID[];
   role?: RoleEnum;
   encryptPassword(password: string): void;
   validatePassword(password: string): boolean;

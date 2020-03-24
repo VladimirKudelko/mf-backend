@@ -1,11 +1,14 @@
 import * as Joi from 'joi';
-import { BudgetTypeEnum } from '../../enums';
+import { BudgetStatusEnum } from '../../enums';
 
-export const addNewBudgetSchema = {
+export const addNewBudgetsSchema = {
   body: {
-    budgetType: Joi.number().valid(BudgetTypeEnum.AllExpenses, BudgetTypeEnum.SpecificCategory).required(),
-    to: Joi.string().required(),
-    limit: Joi.number().required(),
-    currency: Joi.string().required()
+    budgets: Joi.array().items({
+      from: Joi.string().required(),
+      to: Joi.string().required(),
+      limit: Joi.number().required(),
+      status: Joi.string().valid(BudgetStatusEnum.Active, BudgetStatusEnum.Pending, BudgetStatusEnum.Closed).required(),
+      currency: Joi.string().required()
+    }),
   }
 };

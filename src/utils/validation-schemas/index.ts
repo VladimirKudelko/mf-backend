@@ -8,11 +8,11 @@ import {
 import { retrievingViaUseIdSchema } from './common';
 import { creationCategorySchema } from './category';
 import { creationTransactionSchema, retrieveTransactionsByPeriodSchema, retrieveUserExpensesSchema } from './transaction';
-import { addNewBudgetSchema } from './profile';
+import { addNewBudgetsSchema } from './profile';
 
 export {
   authenticationUserSchema,
-  addNewBudgetSchema,
+  addNewBudgetsSchema,
   creationUserSchema,
   creationCategorySchema,
   creationTransactionSchema,

@@ -8,12 +8,11 @@ export const createTransaction: Controller = async(req, res, next) => {
   const { params: { userId }, body } = req;
 
   const transaction = await transactionHelper.create({ userId, ...body });
-  const wallet = await walletHelper.getById(body.walletId);
-  const balance = body.type === CategoryTypeEnum.Incomes
-    ? wallet.balance + body.amountMoney
-    : wallet.balance - body.amountMoney;
-
-  const updatedWallet = await walletHelper.update(body.walletId, { balance, lastUpdate: Date.now() });
+  const transactionBalance = body.type === CategoryTypeEnum.Incomes ? body.amountMoney : -body.amountMoney;
+  const updatedWallet = await walletHelper.update(
+    body.walletId,
+    { $inc: { balance: transactionBalance }, lastUpdate: Date.now() }
+  );
 
   await pushNewWallet(updatedWallet);
 
@@ -59,18 +58,11 @@ export const getUserTransactionsByPeriod: Controller = async(req, res, next) => 
 export const getUserExpenses: Controller = async(req, res, next) => {
   const { query: { from, to } } = req;
   const user = req.user as UserDocument;
-  const transactions = await transactionHelper.getByPeriod(user._id, from, to, { type: CategoryTypeEnum.Expenses });
-  const left = transactions.reduce(
-    (accumulator, currentValue) => accumulator + currentValue.amountMoney,
-    0
-  );
 
-  res.json(new Response({
-    from,
-    to,
-    transactions,
-    left
-  }));
+  const transactions = await transactionHelper.getByPeriod(user._id, from, to, { type: CategoryTypeEnum.Expenses });
+  const used = transactions.reduce((accumulator, currentValue) => accumulator + currentValue.amountMoney, 0);
+
+  res.json(new Response({ from, to, transactions, used }));
 };
 
 export const getNewestUserTransactions: Controller = async(req, res, next) => {

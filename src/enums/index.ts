@@ -6,10 +6,10 @@ import { TransactionPeriodEnum } from './transaction-period';
 import { WalletTypeEnum } from './wallet-type';
 import { IoEventTypesEnum } from './io-event-types';
 import { MonthEnum } from './month';
-import { BudgetTypeEnum } from './budget-type';
+import { BudgetStatusEnum } from './budget-status.enum';
 
 export {
-  BudgetTypeEnum,
+  BudgetStatusEnum,
   CategoryTypeEnum,
   CurrencyEnum,
   ErrorMessageEnum,

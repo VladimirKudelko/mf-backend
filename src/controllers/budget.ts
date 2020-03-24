@@ -1,13 +1,26 @@
 import { Controller } from '../types';
-import { UserDocument, Response } from '../models';
+import { UserDocument, Response, BudgetDocument } from '../models';
 import { budgetHelper, authHelper } from '../db/helpers';
 
-export const addBudget: Controller = async(req, res, next) => {
-  const { body } = req;
+export const addBudgets: Controller = async(req, res, next) => {
+  const { body: { budgets } } = req;
   const user = req.user as UserDocument;
-  const budget = await budgetHelper.create({ ...body, userId: user._id });
+  const createdBudgets: BudgetDocument[] = [];
 
-  await authHelper.updateById(user._id, { budget: { allExpenses: budget._id } });
+  for (const budgetData of budgets) {
+    const budget = await budgetHelper.create({ ...budgetData, userId: user._id });
 
-  res.json(new Response({ budget }));
+    createdBudgets.push(budget);
+  }
+
+  await authHelper.updateById(
+    user._id,
+    {
+      $push: {
+        budgets: createdBudgets.map(budget => budget._id)
+      }
+    }
+  );
+
+  res.json(new Response({ budgets: createdBudgets }));
 };

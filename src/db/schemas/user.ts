@@ -49,16 +49,10 @@ const userSchema = new mongoose.Schema({
     enum: [CurrencyEnum.AmericanDollar, CurrencyEnum.Euro, CurrencyEnum.BelarusianRuble, CurrencyEnum.RussianRuble],
     default: CurrencyEnum.AmericanDollar
   },
-  budget: {
-    type: {
-      allExpenses: mongoose.Schema.Types.ObjectId,
-      category: Object,
-    },
-    default: {
-      allExpenses: null,
-      category: null
-    }
-  }
+  budgets: [{
+    type : mongoose.Schema.Types.ObjectId,
+    ref: 'budget'
+  }],
 }, { versionKey: false });
 
 userSchema.methods.encryptPassword = async function(password) {

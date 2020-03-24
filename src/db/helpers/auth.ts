@@ -14,7 +14,7 @@ const getAll = (query: object = {}) => User.find(query);
 const getAllWithoutCurrentUser = (id: string) => User.find({ _id: { $ne: id } });
 
 const getById = (userId: string) => User.findById(userId)
-  .populate({ path: 'budget.allExpenses', model: Budget });
+  .populate({ path: 'budgets', model: Budget });
 
 const getOneByQuery = (query: object) => User.findOne(query);
 
