@@ -1,6 +1,7 @@
 import mongoose from '../context';
 
 export interface UserQuestionsDocument extends mongoose.Document {
+  _id: string;
   userId: string;
   userEmail: string;
   question1: {
