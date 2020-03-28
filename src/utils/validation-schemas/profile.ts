@@ -12,3 +12,7 @@ export const addNewBudgetsSchema = {
     }),
   }
 };
+
+export const updateBudgetsSchema = {
+  body: { budgets: Joi.array() }
+};

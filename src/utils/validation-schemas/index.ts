@@ -8,7 +8,7 @@ import {
 import { retrievingViaUseIdSchema } from './common';
 import { creationCategorySchema } from './category';
 import { creationTransactionSchema, retrieveTransactionsByPeriodSchema, retrieveUserExpensesSchema } from './transaction';
-import { addNewBudgetsSchema } from './profile';
+import { addNewBudgetsSchema, updateBudgetsSchema } from './profile';
 
 export {
   authenticationUserSchema,
@@ -21,5 +21,6 @@ export {
   retrievingViaUseIdSchema,
   retrieveTransactionsByPeriodSchema,
   retrieveUserExpensesSchema,
+  updateBudgetsSchema,
   verifyEmailSchema
 };
