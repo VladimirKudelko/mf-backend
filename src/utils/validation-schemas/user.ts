@@ -19,11 +19,11 @@ export const creationUserSchema = {
     question1: Joi.object({
       question: Joi.string().default('admin 1'),
       answer: Joi.string().default('admin 1')
-    }),
+    }).default({ question: 'admin 1', answer: 'admin 1' }),
     question2: Joi.object({
       question: Joi.string().default('admin 2'),
       answer: Joi.string().default('admin 2')
-    })
+    }).default({ question: 'admin 2', answer: 'admin 2' })
   }
 };
 
