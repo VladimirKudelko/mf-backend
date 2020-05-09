@@ -32,10 +32,17 @@ const getByPeriod = (userId: string, startDate: string, endDate: string, conditi
   }
 );
 
+const deleteById = (id: string) => Transaction.findByIdAndDelete(id);
+
+const updateById = (id: string, data: TransactionDocument | any) =>
+  Transaction.findOneAndUpdate({ _id: id }, data, { new: true });
+
 export default {
   create,
   getByUserId,
   getByInterval,
   getByPeriod,
-  getNewest
+  getNewest,
+  updateById,
+  deleteById
 };

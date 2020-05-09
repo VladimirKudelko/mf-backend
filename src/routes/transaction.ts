@@ -7,7 +7,9 @@ import {
   getUserTransactionsByInterval,
   getUserTransactionsByPeriod,
   getUserExpenses,
-  getNewestUserTransactions
+  getNewestUserTransactions,
+  deleteTransaction,
+  updateTransaction
 } from '../controllers/transaction';
 import {
   creationTransactionSchema,
@@ -44,5 +46,7 @@ router.get(
   asyncHandler(getUserExpenses)
 );
 router.post('/:userId', authenticate, expressJoi(creationTransactionSchema), asyncHandler(createTransaction));
+router.delete('/:id', asyncHandler(deleteTransaction));
+router.patch('/:id', asyncHandler(updateTransaction));
 
 export default router;

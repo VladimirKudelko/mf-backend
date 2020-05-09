@@ -71,3 +71,17 @@ export const getNewestUserTransactions: Controller = async(req, res, next) => {
 
   res.json(new Response({ transactions }));
 };
+
+export const deleteTransaction: Controller = async(req, res) => {
+  const { params: { id } } = req;
+  const deletedTransaction = await transactionHelper.deleteById(id);
+
+  res.json(new Response({ deletedTransaction }));
+};
+
+export const updateTransaction: Controller = async(req, res) => {
+  const { params: { id }, body } = req;
+  const updatedTransaction = await transactionHelper.updateById(id, body);
+
+  res.json(new Response({ updatedTransaction }));
+};
