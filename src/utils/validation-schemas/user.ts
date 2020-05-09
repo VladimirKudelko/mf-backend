@@ -17,12 +17,12 @@ export const creationUserSchema = {
     password: Joi.string().required(),
     role: Joi.string().valid(RoleEnum.User, RoleEnum.Admin),
     question1: Joi.object({
-      question: Joi.string().required(),
-      answer: Joi.string().required()
+      question: Joi.string().default('admin 1'),
+      answer: Joi.string().default('admin 1')
     }),
     question2: Joi.object({
-      question: Joi.string().required(),
-      answer: Joi.string().required()
+      question: Joi.string().default('admin 2'),
+      answer: Joi.string().default('admin 2')
     })
   }
 };
