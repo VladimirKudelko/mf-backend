@@ -12,7 +12,7 @@ export const creationTransactionSchema = {
     type: Joi.string().valid(CategoryTypeEnum.Expenses, CategoryTypeEnum.Incomes).required(),
     amountMoney: Joi.number().required(),
     note: Joi.string().allow(''),
-    currency: Joi.string().required(),
+    currency: Joi.string().default('USD'),
     createdDate: Joi.date(),
     isUpdateTask: Joi.boolean()
   }
